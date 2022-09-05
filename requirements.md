@@ -10,7 +10,7 @@ Our vision for this project is to create a functioning clone of the classic game
 
 - Our product will allow a user to play classic Tetris
 - Our product will persist score data between sessions
-- Our product will have a separate game and leaderboard page
+- Our product will have separate game, leaderboard, and rules pages.
 - Our product will provide an attractive user interface
 
 #### Out
@@ -43,7 +43,8 @@ Our vision for this project is to create a functioning clone of the classic game
 1. A user can play the game, and the game will end if they meet losing criteria.
 2. A user can exit the game early and restart, if desired.
 3. A user can view past scores.
-4. A user can navigate between the game page and the leaderboard.
+4. A user can view the rules on a separate page.
+5. A user can navigate between the game page and the leaderboard.
 
 ### Data Flow
 
