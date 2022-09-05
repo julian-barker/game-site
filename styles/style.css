@@ -1,18 +1,206 @@
 
+@font-face {
+	font-family: "Tetris";
+	src: url('/fonts/modern-tetris.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: "Lato";
+	src: url('/fonts/Lato-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: "Quicksand";
+	src: url(/fonts/Quicksand-VariableFont_wght.ttf);
+}
+
+@font-face {
+	font-family: "Arcade";
+	src: url(/fonts/PressStart2P-Regular.ttf);
+}
+
+body{
+	margin: 0;
+	background-image: url(/img/cube-patern.jpg);
+	background-size: 5000px;
+}
+
+main{
+	margin: auto;
+}
+
 nav{
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 	width: 100%;
-	background-color: aqua;
-	position: absolute;
+	height: 100px;
+	border-bottom: solid rgb(118, 118, 240);
+	border-width: 5px;
+	background-color: white;
+	transition-duration: 800ms;
+	position:fixed;
+	box-shadow: 2px 2px rgba(0, 0, 0, 0.125);
+	z-index: 1;
 }
+
+nav:hover{
+	background-color: black;
+	color:white;
+	box-shadow: 2px 2px rgba(0, 0, 0, 0.125);
+	border-bottom: solid;
+	border-width: 5px;
+	border-image: linear-gradient(45deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82) 1;
+}
+
+nav:hover a{
+	color:white;
+}
+
+#title{
+	font-family: Tetris;
+	color:black;
+	font-size: 40px;
+	transition-duration: 250ms;
+}
+
 ul{
 	list-style-type: none;
+	
 }
+
 li{
 	display: inline;
+	transition-duration: 500ms;
+	
 }
+
 a{
-	padding: 5px;
+	padding: 8px;
+	margin: 8px;
+	font-size: 20px;
+	color: black;
+	font-family: Lato;
+	text-decoration: none;
+	transition-duration: 250ms;
+}
+
+#play:hover{
+	color:red;
+	font-weight: bold;
+}
+
+#leader-board:hover{
+	color:orange;
+	font-weight: bold;
+}
+
+#how-to-play:hover{
+	color:green;
+	font-weight: bold;
+}
+
+#repo:hover{
+	color:blue;
+	font-weight: bold;
+}
+
+nav:hover #title{
+	color:white;
+
+}
+
+#feeter{
+	display: flex;
+	text-align: center;
+	align-content: flex-start;
+	flex-direction: column;
+	margin-top: 50px;
+}
+
+footer{
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	color: white;
+	display:flex;
+	margin-top: 50px;
+	min-height: 100vh;
+	background-color: black;
+	border-top: solid;
+	border-width: 5px;
+	border-image: linear-gradient(45deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82) 1;
+	width: 100%;
+}
+
+#copyright{
+	font-family: Quicksand, Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	color: grey;
+	margin:0;
+	padding: 0;
+}
+
+#footHead{
+	font-family: Tetris, cursive;
+	font-size: 35px;
+	margin: 0;
+	padding-bottom: 0;
+	padding:0;
+}
+
+#feetlink{
+	margin: 0px;
+	padding: 0px;
+}
+
+#feetlink > a{
+	text-transform: capitalize;
+	padding: 4px;
+	margin: 2px;
+	font-family: Quicksand, Arial, Helvetica, sans-serif;
+	color: grey;
+	min-width: 1000px;
+}
+
+#main-container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 1000px;
+}
+
+#canvas-container{
+	margin-top: 80px;
+	width: 400px;
+	height: 700px;
+	border: 8px solid rgb(255, 255, 255);
+	border-radius: 20px;
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.125);
+	background-color: white;
+}
+
+#lb-main-container{
+	display: flex;
+	justify-content: top;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	height: 1000px;
+}
+
+#main-container h2{
+	color: rgb(124, 75, 75);
+	font-family: Arcade;
+}
+
+#leaderboard-container{
+	margin-top: px;
+	background-color: black;
+	border: 5px white solid;
+	border-radius: 20px;
+	width: 1600px;
+	text-align: center;
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.125);
 }
