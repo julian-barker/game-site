@@ -77,7 +77,7 @@ function Piece() {
     for (let coord of this.coords) {
       const y = coord[1];
       if (y < 4) {
-        console.log('reached top');
+        console.log('Reached the top - game over');
         return false; ///////////// Insert Endgame function here
       }
       gameSpace[coord[1]][coord[0]] = this.val;
@@ -91,7 +91,7 @@ function Piece() {
   };
 
   this.translate = function(direction) {
-    console.log(`moving down from row ${this.bottom[1]} to row ${this.bottom[1] + 1}`, this.coords);
+    console.log(`moving down from row ${this.bottom[1]} to row ${this.bottom[1] + 1}`, this.bottom);
 
     switch (direction) {
       case 'down':
