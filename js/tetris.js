@@ -9,89 +9,34 @@ for (let i in gameSpace) {
   gameSpace[i] = new Array(10).fill(0);
 }
 
-
+let intervalId;
+let activePiece;
 const canvas = $('#canvas');
-
-
-
-Piece.prototype.rotate = pieceRotate;
-
-Piece.prototype.write = function() {
-  console.log(this.coords);
-  for (let coord of this.coords) {
-    // console.log(coord);
-    // console.log(coord[0], coord[1]);
-    // console.log(gameSpace[coord[1]][coord[0]]);
-    gameSpace[coord[1]][coord[0]] = this.val;
-  }
-};
-
-Piece.prototype.translate = function(direction) {
-  console.log(this.coords);
-
-  switch (direction) {
-    case 'down':
-      for (let coord of this.coords) {
-        console.log('y-coord = ' + coord[1]);
-        if (gameSpace[coord[1] + 1][coord[0]] || coord[1] === 23) {
-          this.write();
-          return false;
-        }
-      }
-      this.bottom[1] += 1;
-      this.createCoords();
-      console.log(this.coords);
-      break;
-    case 'left':
-      for (let coord of this.coords) {
-        if (gameSpace[coord[1]][coord[0] - 1] || coord[0] === 0) {
-          return;
-        } else {
-          this.bottom[0] -= 1;
-          this.createCoords();
-        }
-      }
-      break;
-    case 'right':
-      for (let coord of this.coords) {
-        if (gameSpace[coord[1]][coord[0] + 1] || coord[0] === 9) {
-          return;
-        } else {
-          this.bottom[0] += 1;
-          this.createCoords();
-        }
-      }
-      break;
-    default:
-      return;
-  }
-};
-
-// const pieces = [I, J, L, O, S, T, Z];
-
 
 startTetris();
 
 
-
+// starts running the game by calling nextPiece
 function startTetris() {
   console.log(gameSpace);
   nextPiece();
   // console.log('done', gameSpace);
 }
 
+// Calls new piece and begins dropping it using translate method with setInterval
 function nextPiece() {
-  const p = newPiece();
-  console.log('p', p);
-  let x = true;
-  while(x) {
-    x = setTimeout(translate, 1000, p, 'down');
-  }
-  // p.translate('down');
+  activePiece = newPiece();
+  console.log('new piece', activePiece);
+  console.log('Dropping next piece');
+  intervalId = setInterval(function() {  // setInterval returns the intervalId, used to cancel it later
+    activePiece.translate('down');
+  }, 200);
+  console.log('intervalId = ' + intervalId);
 }
 
-
+// Creates a new piece using RNG to randomly select one of the seven piece constructors
 function newPiece() {
+  console.log('Creating new piece...');
   let index = Math.floor(Math.random() * 7);
   switch(index) {
     case 1:
@@ -109,44 +54,88 @@ function newPiece() {
     default:
       return new I();
   }
-  // return new pieces[index];
 }
 
 
+/////////////////////////////////
+// Piece constructor functions //
+
+// Overall Piece constructor function that holds several default methods and properties
+// It is instantiated in individual piece constructors with Piece.call(this)
 function Piece() {
-  // this.rotate = function() {
-  //   this.state = this.state === 270 ? 0 : this.state + 90;
-  //   this.createCoords();
-  // };
-
-  // this.write = function() {
-  //   for (let coord of this.coords) {
-  //     console.log(coord);
-  //     console.log(coord[0], coord[1]);
-  //     console.log(gameSpace[coord[1]][coord[0]]);
-  //     gameSpace[coord[1]][coord[0]] = this.val;
-  //   }
-  // };
-}
-
-
-function pieceRotate() {
-  this.state = this.state === 270 ? 0 : this.state + 90;
-  this.createCoords();
-}
-
-function translate(object, direction) {
-  object.translate(direction);
-}
-
-
-
-function I() {
-  Object.setPrototypeOf(this, Piece.prototype);
-  this.val = 1;
   this.state = 0;
   this.coords = [];
   this.bottom = [5, 3];
+
+  this.rotate = function() {
+    this.state = this.state === 270 ? 0 : this.state + 90;
+    this.createCoords();
+  };
+
+  this.write = function() {
+    console.log(this.coords);
+    for (let coord of this.coords) {
+      const y = coords[1];
+      if (y < 4) {
+        console.log('reached top');
+        return false; ///////////// Insert Endgame function here
+      }
+      gameSpace[coord[1]][coord[0]] = this.val;
+      if (!gameSpace[y].includes(0)) {
+        gameSpace.splice(y, 1);
+        gameSpace.unshift(new Array(10).fill(0));
+      }
+    }
+    return true;
+  };
+
+  this.translate = function(direction) {
+    console.log(this.coords);
+
+    switch (direction) {
+      case 'down':
+        for (let coord of this.coords) {
+          console.log('y-coord = ' + coord[1]);
+          if ( coord[1] === 23 || gameSpace[coord[1] + 1][coord[0]] !== 0) {
+            clearInterval(intervalId);
+            this.write() ? nextPiece() : null;
+            return;
+          }
+        }
+        this.bottom[1] += 1;
+        this.createCoords();
+        break;
+      case 'left':
+        for (let coord of this.coords) {
+          if (gameSpace[coord[1]][coord[0] - 1] || coord[0] === 0) {
+            return;
+          } else {
+            this.bottom[0] -= 1;
+            this.createCoords();
+          }
+        }
+        break;
+      case 'right':
+        for (let coord of this.coords) {
+          if (gameSpace[coord[1]][coord[0] + 1] || coord[0] === 9) {
+            return;
+          } else {
+            this.bottom[0] += 1;
+            this.createCoords();
+          }
+        }
+        break;
+      default:
+        return;
+    }
+  };
+}
+
+
+function I() {
+  Piece.call(this);
+
+  this.val = 1;
 
   this.createCoords = function() {
     switch(this.state) {
@@ -189,11 +178,9 @@ function I() {
 
 
 function J() {
-  Object.setPrototypeOf(this, Piece.prototype);
+  Piece.call(this);
+
   this.val = 2;
-  this.state = 0;
-  this.coords = [];
-  this.bottom = [5, 3];
 
   this.createCoords = function() {
     switch(this.state) {
@@ -236,11 +223,9 @@ function J() {
 
 
 function L() {
-  Object.setPrototypeOf(this, Piece.prototype);
+  Piece.call(this);
+
   this.val = 3;
-  this.state = 0;
-  this.coords = [];
-  this.bottom = [5, 3];
 
   this.createCoords = function() {
     switch(this.state) {
@@ -281,12 +266,9 @@ function L() {
 
 
 function O() {
-  Object.setPrototypeOf(this, Piece.prototype);
+  Piece.call(this);
 
   this.val = 4;
-  this.state = 0;
-  this.coords = [];
-  this.bottom = [5, 3];
 
   this.createCoords = function() {
     this.coords = [
@@ -300,13 +282,11 @@ function O() {
   this.createCoords();
 }
 
+
 function S() {
-  Object.setPrototypeOf(this, Piece.prototype);
+  Piece.call(this);
 
   this.val = 5;
-  this.state = 0;
-  this.coords = [];
-  this.bottom = [5, 3];
 
   this.createCoords = function() {
     switch(this.state) {
@@ -349,12 +329,9 @@ function S() {
 
 
 function T() {
-  Object.setPrototypeOf(this, Piece.prototype);
+  Piece.call(this);
 
   this.val = 6;
-  this.state = 0;
-  this.coords = [];
-  this.bottom = [5, 3];
 
   this.createCoords = function() {
     switch(this.state) {
@@ -396,13 +373,11 @@ function T() {
   this.createCoords();
 }
 
+
 function Z() {
-  Object.setPrototypeOf(this, Piece.prototype);
+  Piece.call(this);
 
   this.val = 7;
-  this.state = 0;
-  this.coords = [];
-  this.bottom = [5, 3];
 
   this.createCoords = function() {
     switch(this.state) {
