@@ -21,9 +21,11 @@ let intervalId; // used to stop setInterval
 let activePiece; // used to call translate left/right with event listener
 
 window.addEventListener('keydown', function(event) {
+  if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)){
+    event.preventDefault();
+  }
   if (event.key === ' ') {
     paused = !paused;
-    event.preventDefault();
   }
   if (paused === true) return;
   if (event.key === 'ArrowUp') {
@@ -34,11 +36,12 @@ window.addEventListener('keydown', function(event) {
 });
 
 // begins the game (for testing)
-startTetris();
+playButton();
 
 
 // starts running the game by calling nextPiece
 function startTetris() {
+  paused = false;
   console.log(gameSpace);
   nextPiece();
   // console.log('done', gameSpace);
@@ -79,6 +82,7 @@ function newPiece() {
 }
 
 function endGame() {
+  paused = true;
   const container = $('#canvas-container');
 
   const popup = _('div');
@@ -93,20 +97,49 @@ function endGame() {
   input.id = 'initials';
   input.type = 'text';
   btn.addEventListener('click', submitScore);
+  btn.textContent = 'Submit';
 
   popup.append(h2, h3, input, btn);
-  container.append(popup);
+  container.prepend(popup);
+  for (let y of gameSpace){
+    y.fill(0);
+  }
+  draw();
+  console.log(gameSpace);
 }
 
 function submitScore() {
-  const scores = JSON.parse(localStorage['scores']);
+  let scores;
+  let maybeStored = localStorage.getItem('scores');
+  if (maybeStored) {
+    scores = JSON.parse(maybeStored);
+  } else {
+    scores = [];
+  }
   const initials = $('#initials').value;
 
   scores.push([initials, score]);
 
   localStorage['scores'] = JSON.stringify(scores);
+  const popup = $('#popup');
+  popup.remove();
+  playButton();
 }
 
+function playButton(){
+  const container = $('#canvas-container');
+  const play = _('button');
+  play.textContent = 'Play';
+  play.id = 'playButton';
+  container.appendChild(play);
+  play.addEventListener('click', playHandler);
+}
+
+function playHandler(){
+  let playButton = $('#playButton');
+  playButton.remove();
+  startTetris();
+}
 
 /////////////////////////////////
 // Piece constructor functions //
