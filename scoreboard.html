@@ -5,6 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="./styles/style.css">
+  <script src="scoreboard.js"></script>
 	<title>Document</title>
 </head>
 <body>
@@ -26,16 +27,37 @@
 			<h2>Leader Board</h2>
       <div id="leaderboard-container">
 				<h3>High Score</h3>
-        <table>
+        <table id="scoreboard">
+          <thead>
           <tr>
             <th>RANK</th>
             <th>NAME</th>
             <th>SCORE</th>
           </tr>
+          </thead>
+          <tbody>
+          </tbody>
+          <tfoot></tfoot>
         </table>
       </div>
     </div>
   </main>
-	
+
+	<footer>
+    <div id="feeter">
+      <div id="footHeader">
+        <h2 id="footHead">Gitris<h2>
+        <p id="copyright"> &copy; 2022</p>
+      </div>
+      <div id="feetlink">
+        <a href="#" target="_blank">LEGAL THINGS</a>
+          |
+        <a href="">PRIVACY POLICY</a>
+          |
+        <a href="">SECURITY</a>
+      </div>
+    </div>  
+  </footer>
+
 </body>
 </html>
