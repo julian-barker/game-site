@@ -21,7 +21,7 @@
 
 body{
 	margin: 0;
-	background-image: url(/img/cube-patern.jpg);
+	background-image: url(/img/cube-pattern.jpg);
 	background-size: 5000px;
 }
 
@@ -186,21 +186,43 @@ footer{
 	justify-content: top;
 	align-items: center;
 	flex-direction: column;
+	padding-top: 200px;
 	width: 100%;
 	height: 1000px;
 }
 
-#main-container h2{
-	color: rgb(124, 75, 75);
-	font-family: Arcade;
+#lb-main-container h2{
+	color: rgb(118, 118, 240);
+	font-size: 80px;
+	font-family: Lato;
+	text-shadow: 1px 1px black;
 }
 
 #leaderboard-container{
-	margin-top: px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	background-color: black;
 	border: 5px white solid;
+	font-family: Arcade;
 	border-radius: 20px;
 	width: 1600px;
 	text-align: center;
 	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.125);
+}
+
+#leaderboard-container h3{
+	color: white;
+	font-size: 40px;
+}
+
+#leaderboard-container table{
+	color: white;
+	font-size: 20px;
+}
+
+#leaderboard-container th{
+	margin: 20px;
+	padding: 20px;
 }
