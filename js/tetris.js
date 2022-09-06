@@ -73,14 +73,15 @@ function Piece() {
   };
 
   this.write = function() {
-    console.log(this.coords);
+    console.log('writing to gameSpace...', this.coords);
     for (let coord of this.coords) {
-      const y = coords[1];
+      const y = coord[1];
       if (y < 4) {
         console.log('reached top');
         return false; ///////////// Insert Endgame function here
       }
       gameSpace[coord[1]][coord[0]] = this.val;
+      // console.log(y, gameSpace[y]);
       if (!gameSpace[y].includes(0)) {
         gameSpace.splice(y, 1);
         gameSpace.unshift(new Array(10).fill(0));
@@ -90,12 +91,12 @@ function Piece() {
   };
 
   this.translate = function(direction) {
-    console.log(this.coords);
+    console.log(`moving down from row ${this.bottom[1]} to row ${this.bottom[1] + 1}`, this.coords);
 
     switch (direction) {
       case 'down':
         for (let coord of this.coords) {
-          console.log('y-coord = ' + coord[1]);
+          // console.log('y-coord = ' + coord[1]);
           if ( coord[1] === 23 || gameSpace[coord[1] + 1][coord[0]] !== 0) {
             clearInterval(intervalId);
             this.write() ? nextPiece() : null;
