@@ -21,7 +21,7 @@
 
 body{
 	margin: 0;
-	background-image: url(/img/cube-patern.jpg);
+	background-image: url(/img/cube-pattern.jpg);
 	background-size: 5000px;
 }
 
@@ -199,8 +199,13 @@ footer{
 }
 
 #leaderboard-container{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	background-color: black;
 	border: 5px white solid;
+	font-family: Arcade;
 	border-radius: 20px;
 	width: 1600px;
 	text-align: center;
@@ -209,6 +214,15 @@ footer{
 
 #leaderboard-container h3{
 	color: white;
-	font-family: Arcade;
-	font-size: 24px;
+	font-size: 40px;
+}
+
+#leaderboard-container table{
+	color: white;
+	font-size: 20px;
+}
+
+#leaderboard-container th{
+	margin: 20px;
+	padding: 20px;
 }
