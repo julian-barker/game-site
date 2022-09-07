@@ -101,6 +101,11 @@ a{
 }
 
 #how-to-play:hover{
+	color:yellow;
+	font-weight: bold;
+}
+
+#funfacts:hover{
 	color:green;
 	font-weight: bold;
 }
@@ -183,7 +188,7 @@ footer{
 	justify-content: top;
 	align-items: center;
 	flex-direction: column;
-	padding-top: 200px;
+	margin-top: 100px;
 	width: 100%;
 	height: 1000px;
 }
@@ -204,7 +209,7 @@ footer{
 	border: 5px white solid;
 	font-family: Arcade;
 	border-radius: 20px;
-	width: 1600px;
+	width: 800px;
 	text-align: center;
 	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.125);
 }
@@ -235,7 +240,7 @@ footer{
 	justify-content: top;
 	align-items: center;
 	flex-direction: column;
-	padding-top: 200px;
+	margin-top: 100px;
 	width: 100%;
 	height: 1000px;
 }
@@ -256,7 +261,7 @@ footer{
 	border: 5px white solid;
 	font-family: Arcade;
 	border-radius: 20px;
-	width: 1600px;
+	width: 1000px;
 	text-align: center;
 	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.125);
 }
@@ -293,7 +298,7 @@ footer{
 	justify-content: top;
 	align-items: center;
 	flex-direction: column;
-	padding-top: 200px;
+	padding-top: 100px;
 	width: 100%;
 	height: 1000px;
 }
@@ -314,7 +319,7 @@ footer{
 	border: 5px white solid;
 	font-family: Arcade;
 	border-radius: 20px;
-	width: 1600px;
+	width: 1000px;
 	text-align: center;
 	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.125);
 }
