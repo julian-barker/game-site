@@ -117,15 +117,22 @@ function submitScore() {
   } else {
     scores = [];
   }
+
   const initials = $('#initials').value;
 
-  scores.push({initials, score});
-  scores.sort((a, b) => b.score - a.score);
-  localStorage['scores'] = JSON.stringify(scores);
-  const popup = $('#popup');
-  console.log(maybeStored);
-  popup.remove();
-  playButton();
+  if (initials.length > 3){
+    alert('Three characters max!');
+  } else if(initials === null || initials === ''){
+    alert('Please enter initials!');
+  } else{
+    scores.push({initials, score});
+    scores.sort((a, b) => b.score - a.score);
+    localStorage['scores'] = JSON.stringify(scores);
+    const popup = $('#popup');
+    console.log(maybeStored);
+    popup.remove();
+    playButton();
+  }
 }
 
 function playButton() {
