@@ -26,8 +26,19 @@ window.addEventListener('keydown', function (event) {
   }
   if (event.key === ' ') {
     paused = !paused;
+    if (paused === false){
+      const h2 = $('#pause');
+      h2.remove();
+    }
   }
-  if (paused === true) return;
+  if (paused === true) {
+    const container = $('#canvas-container');
+    const h2 = _('h2');
+    h2.textContent = 'PAUSED';
+    h2.id = 'pause';
+    container.appendChild(h2);
+    return;
+  }
   if (event.key === 'ArrowUp') {
     activePiece.rotate();
   } else {
