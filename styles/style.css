@@ -172,6 +172,16 @@ footer{
 	height: 1000px;
 }
 
+#playButton {
+	background: none;
+	background-image: url(/img/Playbutton.png);
+	background-size: cover;
+	height: 80px;
+	width: 150px;
+	border: none;
+
+}
+
 #canvas-container{
 	margin-top: 80px;
 	width: 400px;
@@ -292,3 +302,71 @@ footer{
 	width: 700px;
 }
 
+#ff-main-container{
+	display: flex;
+	justify-content: top;
+	align-items: center;
+	flex-direction: column;
+	padding-top: 200px;
+	width: 100%;
+	height: 1000px;
+}
+
+#ff-main-container h2{
+	color: rgb(118, 118, 240);
+	font-size: 80px;
+	font-family: Lato;
+	text-shadow: 1px 1px black;
+}
+
+#funfacts-container{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: black;
+	border: 5px white solid;
+	font-family: Arcade;
+	border-radius: 20px;
+	width: 1600px;
+	text-align: center;
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.125);
+}
+
+#funfacts-container h3{
+	color: white;
+	font-size: 40px;
+}
+
+#funfacts-container table{
+	color: white;
+	font-size: 20px;
+}
+
+#funfacts-container th{
+	margin: 20px;
+	padding: 20px;
+}
+
+#funfacts-container ul{
+	color: white;
+	font-size: 14px;
+}
+
+#funfacts-container li{
+	width: 200px;
+}
+
+#facts {
+	text-align: left;
+	color: white;
+	font-size: 14px;
+	width: 700px;
+}
+
+#history {
+	text-align: left;
+	color: white;
+	font-size: 14px;
+	width: 700px;
+}

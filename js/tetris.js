@@ -3,11 +3,16 @@
 
 // shortcut functions for document methods
 function $(selector) { return document.querySelector(selector); }
-function $$(selector) { return document.querySelectorAll(selector); }
+// function $$(selector) { return document.querySelectorAll(selector); }
 function _(tag) { return document.createElement(tag); }
 
 
 // Initialize global variables
+let score = 0;
+let paused = false;
+let speed = 400; // sets interval between drops (in ms)
+let intervalId; // used to stop setInterval
+let activePiece; // used to call translate left/right with event listener
 
 // nested 2d array (10x24)
 const gameSpace = new Array(24).fill(0);
@@ -15,11 +20,7 @@ for (let i in gameSpace) {
   gameSpace[i] = new Array(10).fill(0);
 }
 
-let score = 0;
-let paused = false;
-let intervalId; // used to stop setInterval
-let activePiece; // used to call translate left/right with event listener
-
+// add event listeners for user inou to control the game
 window.addEventListener('keydown', function (event) {
   if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
     event.preventDefault();
@@ -35,17 +36,27 @@ window.addEventListener('keydown', function (event) {
   }
 });
 
-// begins the game (for testing)
+// display play button on load
 playButton();
 
 
 // starts running the game by calling nextPiece
 function startTetris() {
-  score = 0;
+  console.log('Starting a new game...');
   paused = false;
-  console.log(gameSpace);
   nextPiece();
   // console.log('done', gameSpace);
+}
+
+function reset() {
+  // reset game state
+  console.log('resetting the game state');
+  score = 0;
+  for (let y of gameSpace) {
+    y.fill(0);
+  }
+  activePiece.coords = [[0,0]];
+  draw();
 }
 
 // Calls new piece and begins dropping it using translate method with setInterval
@@ -56,7 +67,7 @@ function nextPiece() {
   // setInterval returns the intervalId, used to cancel it later
   intervalId = setInterval(function () {
     activePiece.translate('ArrowDown');
-  }, 300);
+  }, speed);
   console.log('intervalId = ' + intervalId);
 }
 
@@ -82,10 +93,12 @@ function newPiece() {
   }
 }
 
+// brings up the score submission popup
 function endGame() {
   paused = true;
   const container = $('#canvas-container');
 
+  // create popup and inner elements
   const popup = _('div');
   const h2 = _('h2');
   const h3 = _('h3');
@@ -101,14 +114,13 @@ function endGame() {
   btn.textContent = 'Submit';
 
   popup.append(h2, h3, input, btn);
+  // append to canvas container
   container.prepend(popup);
-  for (let y of gameSpace) {
-    y.fill(0);
-  }
-  draw();
+
   console.log(gameSpace);
 }
 
+// submits inputted initials and score to local storage
 function submitScore() {
   let scores;
   let maybeStored = localStorage.getItem('scores');
@@ -135,19 +147,40 @@ function submitScore() {
   }
 }
 
+// adds playbutton to screen
 function playButton() {
   const container = $('#canvas-container');
   const play = _('button');
-  play.textContent = 'Play';
+  // play.textContent = 'Play';
   play.id = 'playButton';
   container.appendChild(play);
   play.addEventListener('click', playHandler);
 }
 
+// calls for game to begin and removes the button
 function playHandler() {
   let playButton = $('#playButton');
   playButton.remove();
   startTetris();
+}
+
+// checks for filled rows and clears them
+function checkLine(piece) {
+  let yCoords = [];
+  for (let coord of piece.coords) {
+    if (!gameSpace[coord[1]].includes(0)) {
+      yCoords.push(coord[1]);
+    }
+  }
+  const set = [...new Set(yCoords)];
+  set.sort((a, b) => a - b);
+  console.log(set);
+  set.forEach( element => {
+    gameSpace.splice(element, 1);
+    gameSpace.unshift(new Array(10).fill(0));
+    score += 100;
+    speed *= 0.98;
+  });
 }
 
 /////////////////////////////////
@@ -170,32 +203,25 @@ function Piece() {
         return;
       }
     }
+    // create rotated coordinates
     this.coords = this.createCoords();
     draw();
   };
 
   this.write = function () {
     console.log('writing to gameSpace...', this.coords);
+    // write activePiece to gameSpace array
     for (let coord of this.coords) {
+      // check for endgame criteria
       if (coord[1] < 4) {
         console.log('Reached the top - game over');
         draw();
         endGame();
-        return false; ///////////// Insert Endgame function here
+        return false;
       }
-
-      // clear lines
       gameSpace[coord[1]][coord[0]] = this.val;
-      // console.log(y, gameSpace[y]);
     }
-    for (let coord of this.coords) {
-      if (!gameSpace[coord[1]].includes(0)) {
-        gameSpace.splice(coord[1], 1);
-        gameSpace.unshift(new Array(10).fill(0));
-        score += 100;
-        // activePiece = null;
-      }
-    }
+    checkLine(this);
     draw();
     return true;
   };
@@ -207,9 +233,8 @@ function Piece() {
     switch (direction) {
       // move piece down one space
       case 'ArrowDown':
-        // console.log(`moving down from row ${this.origin[1]} to row ${this.origin[1] + 1}`, this.origin);
         for (let coord of this.coords) {
-          // console.log('y-coord = ' + coord[1]);
+          // check if at the bottom or if space below is occupied
           if (coord[1] === 23 || gameSpace[coord[1] + 1][coord[0]] !== 0) {
             clearInterval(intervalId);
             this.write() ? nextPiece() : null;
@@ -225,6 +250,7 @@ function Piece() {
       case 'ArrowLeft':
         console.log('trying to move left');
         for (let coord of this.coords) {
+          // check if at left edge or if space to the left is occupied
           if (coord[0] === 0 || gameSpace[coord[1]][coord[0] - 1] !== 0) {
             return;
           }
@@ -237,9 +263,8 @@ function Piece() {
       // move piece right one space
       case 'ArrowRight':
         console.log('trying to move right');
-        // let occupied = false;
         for (let coord of this.coords) {
-          console.log('x coord = ' + coord[0]);
+          // check if at right edge or if space to the right is occupied
           if (coord[0] === 9 || gameSpace[coord[1]][coord[0] + 1] !== 0) {
             return;
           }
@@ -257,10 +282,13 @@ function Piece() {
 
 // Individual piece constructors
 function I() {
+  // create instance of Piece
   Piece.call(this);
 
+  // value to be written to the gamespace array
   this.val = 1;
 
+  // create coordinates based on rotation state
   this.createCoords = function () {
     let coords;
     switch (this.state) {
@@ -298,6 +326,7 @@ function I() {
     }
     return coords;
   };
+  //assign coordinates to coordinates property
   this.coords = this.createCoords();
 }
 
@@ -552,7 +581,9 @@ function Z() {
 function draw() {
   const canvas = $('canvas');
   const ctx = canvas.getContext('2d');
+  // clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // create piece color assignments
   let colors = {
     0: '#222',
     1: '#0ff',
@@ -563,19 +594,35 @@ function draw() {
     6: '#90f',
     7: '#f00'
   };
+
+  // draw gamespace
   for (let y = 4; y < gameSpace.length; y++) {
     for (let x in gameSpace[y]) {
       let val = gameSpace[y][x];
-      // console.log(`val at gameSpace[${x}][${y}] = ${val}`);
       let color = colors[val];
       let h = canvas.height / (gameSpace.length - 4);
       let w = canvas.width / (gameSpace[y].length);
-      ctx.fillStyle = color;
-      ctx.fillRect(x * w, (y - 4) * h, w, h);
-      ctx.strokeStyle = 'black';
-      ctx.strokeRect(x * w, (y - 4) * h, w, h);
+      const a = x * w;
+      const b = (y - 4) * h;
+      if (color === '#222') { // style empty cells differently
+        ctx.fillStyle = color;
+        ctx.fillRect(a, b, w, h);
+        ctx.strokeStyle = 'black';
+        ctx.strokeRect(a, b, w, h);
+      } else {
+        const grad = ctx.createRadialGradient(a, b, h, a + 5, b - 5, h/2 - 5); //create gradient for block design
+        grad.addColorStop(1, 'lightgrey');
+        grad.addColorStop(0, color); // assign block color to gradient
+        ctx.fillStyle = grad;
+        ctx.fillRect(a, b, w, h); // fill blocks with gradient
+        ctx.strokeStyle = 'black';
+        ctx.strokeRect(a, b, w, h); // create border
+        ctx.fillStyle = color; // reset fill to solid color
+        ctx.fillRect(a + 4, b + 4, w - 8, h - 8); // fill middle of block with solid color
+      }
     }
   }
+  // draw active piece
   for (let coord of activePiece.coords) {
     let x = coord[0];
     let y = coord[1];
@@ -583,12 +630,20 @@ function draw() {
     let color = colors[val];
     let h = canvas.height / (gameSpace.length - 4);
     let w = canvas.width / (gameSpace[y].length);
-    // console.log('x = ' + x, 'y = ' + y, 'w = ' + w, 'h = ' + h);
-    ctx.fillStyle = color;
-    ctx.fillRect(x * w, (y - 4) * h, w, h);
+    const a = x * w;// starting x-coord
+    const b = (y - 4) * h;// starting y-coord
+    const grad = ctx.createRadialGradient(a, b, h, a + 5, b - 5, h/2 - 5);
+    grad.addColorStop(1, 'lightgrey');
+    grad.addColorStop(0, color);
+    ctx.fillStyle = grad;
+    ctx.fillRect(a, b, w, h);
     ctx.strokeStyle = 'black';
-    ctx.strokeRect(x * w, (y - 4) * h, w, h);
+    ctx.strokeRect(a, b, w, h);
+    ctx.fillStyle = color;
+    ctx.fillRect(a + 4, b + 4, w - 8, h - 8);
   }
+  // write score to top-left of screen
   ctx.fillStyle = 'white';
-  ctx.fillText(`Score: ${score}`, 10, 10);
+  ctx.font = 'bold 24px sans-serif';
+  ctx.fillText(`Score: ${score}`, 10, 30);
 }
