@@ -216,16 +216,22 @@ footer{
 #leaderboard-container h3{
 	color: white;
 	font-size: 40px;
+	margin-bottom: 15px;
 }
 
 #leaderboard-container table{
 	color: white;
 	font-size: 20px;
+	margin-bottom: 30px;
 }
 
 #leaderboard-container th{
 	margin: 20px;
 	padding: 20px;
+}
+
+#leaderboard-container td{
+	padding: 8px;
 }
 
 #ht-main-container{
@@ -285,3 +291,4 @@ footer{
 	font-size: 14px;
 	width: 700px;
 }
+

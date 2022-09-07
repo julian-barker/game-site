@@ -123,6 +123,7 @@ function submitScore() {
   scores.sort((a, b) => b.score - a.score);
   localStorage['scores'] = JSON.stringify(scores);
   const popup = $('#popup');
+  console.log(maybeStored);
   popup.remove();
   playButton();
 }
