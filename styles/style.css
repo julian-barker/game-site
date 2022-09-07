@@ -39,6 +39,7 @@ nav{
 	border-width: 5px;
 	background-color: white;
 	transition-duration: 800ms;
+	top:0;
 	position:fixed;
 	box-shadow: 2px 2px rgba(0, 0, 0, 0.125);
 	z-index: 1;
