@@ -29,3 +29,8 @@
     color: white;
     font-weight: 900;
 }
+
+#canvas2 {
+    height: 25%;
+    padding-left: 30px;
+}

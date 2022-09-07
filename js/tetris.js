@@ -15,10 +15,16 @@ for (let i in gameSpace) {
   gameSpace[i] = new Array(10).fill(0);
 }
 
+const gameSpace2 = new Array(6).fill(0);
+for (let i in gameSpace2) {
+  gameSpace2[i] = new Array(7).fill(0);
+}
+
 let score = 0;
 let paused = false;
 let intervalId; // used to stop setInterval
 let activePiece; // used to call translate left/right with event listener
+let nextPieceDisplay;
 
 window.addEventListener('keydown', function (event) {
   if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
@@ -61,7 +67,13 @@ function startTetris() {
 
 // Calls new piece and begins dropping it using translate method with setInterval
 function nextPiece() {
-  activePiece = newPiece();
+  if (!nextPieceDisplay) {
+    activePiece = newPiece();
+  } else {
+    activePiece = nextPieceDisplay;
+  }
+  nextPieceDisplay = newPiece();
+  drawNextPiece();
   console.log('new piece', activePiece);
   console.log('Dropping next piece');
   // setInterval returns the intervalId, used to cancel it later
@@ -553,8 +565,8 @@ function Z() {
 }
 
 function draw() {
-  const canvas = $('canvas');
-  const ctx = canvas.getContext('2d');
+  let canvas = $('canvas');
+  let ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   let colors = {
     0: '#222',
@@ -595,3 +607,45 @@ function draw() {
   ctx.fillStyle = 'white';
   ctx.fillText(`Score: ${score}`, 10, 10);
 }
+
+function drawNextPiece(){
+  let canvas = $('#canvas2');
+  let ctx2 = canvas.getContext('2d');
+  ctx2.clearRect(0, 0, canvas.width, canvas.height);
+  let colors = {
+    0: '#222',
+    1: '#0ff',
+    2: '#00f',
+    3: '#fb0',
+    4: '#ff0',
+    5: '#0f0',
+    6: '#90f',
+    7: '#f00'
+  };
+  for (let y = 0; y < gameSpace2.length; y++) {
+    for (let x in gameSpace2[y]) {
+      let val = gameSpace2[y][x];
+      let color = colors[val];
+      let h = canvas.height / (gameSpace2.length);
+      let w = canvas.width / (gameSpace2[y].length);
+      ctx2.fillStyle = color;
+      ctx2.fillRect(x * w, y * h, w, h);
+      ctx2.strokeStyle = 'black';
+      ctx2.strokeRect(x * w, y * h, w, h);
+    }
+  }
+  for (let coord of nextPieceDisplay.coords) {
+    let x = coord[0];
+    let y = coord[1];
+    let val = nextPieceDisplay.val;
+    let color = colors[val];
+    let h = canvas.height / (gameSpace2.length);
+    let w = canvas.width / (gameSpace2[y].length);
+    ctx2.fillStyle = color;
+    ctx2.fillRect(x * w, y * h, w, h);
+    ctx2.strokeStyle = 'black';
+    ctx2.strokeRect(x * w, y * h, w, h);
+  }
+}
+
+
