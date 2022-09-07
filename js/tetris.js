@@ -13,12 +13,20 @@ let paused = false;
 let speed = 400; // sets interval between drops (in ms)
 let intervalId; // used to stop setInterval
 let activePiece; // used to call translate left/right with event listener
+let nextPieceDisplay;
 
 // nested 2d array (10x24)
 const gameSpace = new Array(24).fill(0);
 for (let i in gameSpace) {
   gameSpace[i] = new Array(10).fill(0);
 }
+
+// array to display next piece
+const gameSpace2 = new Array(6).fill(0);
+for (let i in gameSpace2) {
+  gameSpace2[i] = new Array(7).fill(0);
+}
+
 
 // add event listeners for user inou to control the game
 window.addEventListener('keydown', function (event) {
@@ -27,8 +35,18 @@ window.addEventListener('keydown', function (event) {
   }
   if (event.key === ' ') {
     paused = !paused;
+    if (paused === false){
+      const h2 = $('#pause');
+      h2.remove();
+    } else {
+      const container = $('#canvas-container');
+      const h2 = _('h2');
+      h2.textContent = 'PAUSED';
+      h2.id = 'pause';
+      container.appendChild(h2);
+      return;
+    }
   }
-  if (paused === true) return;
   if (event.key === 'ArrowUp') {
     activePiece.rotate();
   } else {
@@ -61,7 +79,13 @@ function reset() {
 
 // Calls new piece and begins dropping it using translate method with setInterval
 function nextPiece() {
-  activePiece = newPiece();
+  if (!nextPieceDisplay) {
+    activePiece = newPiece();
+  } else {
+    activePiece = nextPieceDisplay;
+  }
+  nextPieceDisplay = newPiece();
+  drawNextPiece();
   console.log('new piece', activePiece);
   console.log('Dropping next piece');
   // setInterval returns the intervalId, used to cancel it later
@@ -143,6 +167,7 @@ function submitScore() {
     const popup = $('#popup');
     console.log(maybeStored);
     popup.remove();
+    reset();
     playButton();
   }
 }
@@ -647,3 +672,50 @@ function draw() {
   ctx.font = 'bold 24px sans-serif';
   ctx.fillText(`Score: ${score}`, 10, 30);
 }
+
+function drawNextPiece(){
+  let canvas = $('#canvas2');
+  let ctx2 = canvas.getContext('2d');
+  ctx2.clearRect(0, 0, canvas.width, canvas.height);
+  let colors = {
+    0: '#222',
+    1: '#0ff',
+    2: '#00f',
+    3: '#fb0',
+    4: '#ff0',
+    5: '#0f0',
+    6: '#90f',
+    7: '#f00'
+  };
+  ctx2.fillStyle = '#222';
+  ctx2.fillRect(0, 0, canvas.width, canvas.height);
+  ctx2.strokeStyle = 'gray';
+  ctx2.strokeRect(0, 0, canvas.width, canvas.height);
+  for (let coord of nextPieceDisplay.coords) {
+    let x = coord[0] - 3;
+    let y = coord[1] + 1;
+    let val = nextPieceDisplay.val;
+    let color = colors[val];
+    let h = canvas.height / 6;
+    let w = canvas.width / 5;
+    ctx2.fillStyle = color;
+    ctx2.fillRect(x * w, y * h, w, h);
+    ctx2.strokeStyle = 'black';
+    ctx2.strokeRect(x * w, y * h, w, h);
+
+    const a = x * w; // starting x-coord
+    const b = y * h; // starting y-coord
+    const grad = ctx2.createRadialGradient(a, b, h, a + 5, b - 5, h/2 - 5);
+    grad.addColorStop(1, 'lightgrey');
+    grad.addColorStop(0, color);
+    ctx2.fillStyle = grad;
+    ctx2.fillRect(a, b, w, h);
+    ctx2.strokeStyle = 'black';
+    ctx2.strokeRect(a, b, w, h);
+    ctx2.fillStyle = color;
+    ctx2.fillRect(a + 4, b + 4, w - 8, h - 8);
+
+  }
+}
+
+
