@@ -21,6 +21,7 @@ for (let i in gameSpace) {
   gameSpace[i] = new Array(10).fill(0);
 }
 
+// array to display next piece
 const gameSpace2 = new Array(6).fill(0);
 for (let i in gameSpace2) {
   gameSpace2[i] = new Array(7).fill(0);
@@ -37,15 +38,14 @@ window.addEventListener('keydown', function (event) {
     if (paused === false){
       const h2 = $('#pause');
       h2.remove();
+    } else {
+      const container = $('#canvas-container');
+      const h2 = _('h2');
+      h2.textContent = 'PAUSED';
+      h2.id = 'pause';
+      container.appendChild(h2);
+      return;
     }
-  }
-  if (paused === true) {
-    const container = $('#canvas-container');
-    const h2 = _('h2');
-    h2.textContent = 'PAUSED';
-    h2.id = 'pause';
-    container.appendChild(h2);
-    return;
   }
   if (event.key === 'ArrowUp') {
     activePiece.rotate();
@@ -167,6 +167,7 @@ function submitScore() {
     const popup = $('#popup');
     console.log(maybeStored);
     popup.remove();
+    reset();
     playButton();
   }
 }
@@ -686,29 +687,34 @@ function drawNextPiece(){
     6: '#90f',
     7: '#f00'
   };
-  for (let y = 0; y < gameSpace2.length; y++) {
-    for (let x in gameSpace2[y]) {
-      let val = gameSpace2[y][x];
-      let color = colors[val];
-      let h = canvas.height / (gameSpace2.length);
-      let w = canvas.width / (gameSpace2[y].length);
-      ctx2.fillStyle = color;
-      ctx2.fillRect(x * w, y * h, w, h);
-      ctx2.strokeStyle = 'black';
-      ctx2.strokeRect(x * w, y * h, w, h);
-    }
-  }
+  ctx2.fillStyle = '#222';
+  ctx2.fillRect(0, 0, canvas.width, canvas.height);
+  ctx2.strokeStyle = 'gray';
+  ctx2.strokeRect(0, 0, canvas.width, canvas.height);
   for (let coord of nextPieceDisplay.coords) {
-    let x = coord[0];
-    let y = coord[1];
+    let x = coord[0] - 3;
+    let y = coord[1] + 1;
     let val = nextPieceDisplay.val;
     let color = colors[val];
-    let h = canvas.height / (gameSpace2.length);
-    let w = canvas.width / (gameSpace2[y].length);
+    let h = canvas.height / 6;
+    let w = canvas.width / 5;
     ctx2.fillStyle = color;
     ctx2.fillRect(x * w, y * h, w, h);
     ctx2.strokeStyle = 'black';
     ctx2.strokeRect(x * w, y * h, w, h);
+
+    const a = x * w; // starting x-coord
+    const b = y * h; // starting y-coord
+    const grad = ctx2.createRadialGradient(a, b, h, a + 5, b - 5, h/2 - 5);
+    grad.addColorStop(1, 'lightgrey');
+    grad.addColorStop(0, color);
+    ctx2.fillStyle = grad;
+    ctx2.fillRect(a, b, w, h);
+    ctx2.strokeStyle = 'black';
+    ctx2.strokeRect(a, b, w, h);
+    ctx2.fillStyle = color;
+    ctx2.fillRect(a + 4, b + 4, w - 8, h - 8);
+
   }
 }
 
