@@ -26,7 +26,11 @@ body{
 }
 
 main{
-	margin: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 1000px;
 }
 
 nav{
@@ -164,13 +168,6 @@ footer{
 	min-width: 1000px;
 }
 
-#main-container{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 1000px;
-}
 
 #playButton {
 	background: none;
@@ -179,17 +176,6 @@ footer{
 	height: 80px;
 	width: 150px;
 	border: none;
-
-}
-
-#canvas-container{
-	margin-top: 80px;
-	width: 400px;
-	height: 700px;
-	border: 8px solid rgb(255, 255, 255);
-	border-radius: 20px;
-	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.125);
-	background-color: white;
 }
 
 #lb-main-container{
