@@ -6,55 +6,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
   <link rel="stylesheet" href="./styles/canvasStyle.css">
+  <script src="./js/index.js" defer></script>
   <script src="./js/tetris.js" defer></script>
   <title>Document</title>
 </head>
 <body>
-  <p></p>
+  <div class="bg-filter">
+    <header>
+      <nav>
+        <h1 id="title">Gitris</h1>
+        <ul>
+          <li><a href="index.html" id="play">Play</a></li>
+          <li><a href="scoreboard.html" id="leader-board">Leader Board</a></li>
+          <li><a href="how-to-play.html" id="how-to-play">How to Play</a></li>
+          <li><a href="funfacts.html" id="funfacts">Fun Facts</a></li>
+          <li><a href="https://github.com/julian-barker/game-site" target="_blank" id="repo">Repo</a></li>
+        </ul>
+      </nav>
+      <button id="ld">L/D</button>
+    </header>
 
-  <header>
-    <nav>
-      <h1 id="title">Gitris</h1>
-      <ul>
-        <li><a href="index.html" id="play">Play</a></li>
-        <li><a href="scoreboard.html" id="leader-board">Leader Board</a></li>
-        <li><a href="how-to-play.html" id="how-to-play">How to Play</a></li>
-        <li><a href="funfacts.html" id="funfacts">Fun Facts</a></li>
-        <li><a href="https://github.com/julian-barker/game-site" target="_blank" id="repo">Repo</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <div id="main-container">
-      <div id="canvas-container">
-        <canvas id="canvas" height="800" width="400"></canvas>
-      </div>
-      <div id="canvas2-container">
-        <h2>Next Piece</h2>
-        <canvas id="canvas2" height="240" width="200"></canvas>
-        <div>
-          <p>ADS GO HERE</p>
+    <main>
+      <div id="main-container">
+        <div id="canvas-container">
+          <canvas id="canvas" height="800" width="400"></canvas>
+        </div>
+        <div id="canvas2-container">
+          <h2>Next Piece</h2>
+          <canvas id="canvas2" height="240" width="200"></canvas>
+          <div>
+            <p>ADS GO HERE</p>
+          </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
 
-  <footer>
-  <div id="feeter">
-    <div id="footHeader">
-      <h2 id="footHead">Gitris<h2>
-      <p id="copyright"> &copy; 2022</p>
-    </div>
-    <div id="feetlink">
-      <a href="#" target="_blank">LEGAL THINGS</a>
-        |
-      <a href="">PRIVACY POLICY</a>
-        |
-      <a href="">SECURITY</a>
-    </div>
-  </div>  
-  </footer>
-  
+    <footer>
+    <div id="feeter">
+      <div id="footHeader">
+        <h2 id="footHead">Gitris<h2>
+        <p id="copyright"> &copy; 2022</p>
+      </div>
+      <div id="feetlink">
+        <a href="#" target="_blank">LEGAL THINGS</a>
+          |
+        <a href="">PRIVACY POLICY</a>
+          |
+        <a href="">SECURITY</a>
+      </div>
+    </div>  
+    </footer>
+  </div>
 </body>
 </html>
