@@ -1,37 +1,44 @@
 'use strict';
 
-
-
-// function loadScores() {
-//   const getScores = JSON.parse(localStorage.getItem('scores'));
-//   allScores = getScores;
-// }
-
-
-function Score(initials, score){
-	this.initials = initials;
-	this.score = score;
-	allScores.push(this);
-}
-
 let allScores = [];
 
-new Score('jul', 200);
-new Score('mtr', 300);
-new Score('cnd', 500);
-new Score('crh', 1000);
+const tbodyEl = document.querySelector('#scoreboard tbody');
+
+function loadScores() {
+  const getScores = JSON.parse(localStorage.getItem('scores'));
+  allScores = getScores;
+  console.log(allScores);
+}
+loadScores();
 
 
 function displayScores() {
-  let tbodyEl = document.querySelector('#scoreboard tbody');
+
+
+  console.log(tbodyEl);
 
   for (let i = 0; i < allScores.length; i++) {
     let trEl = document.createElement('tr');
     tbodyEl.appendChild(trEl);
     let tdEl = document.createElement('td');
+    tdEl = document.createElement('td');
+    if(i >= 3 ){
+      tdEl.textContent = `${i+1}TH`;
+    } else{
+      switch(i){
+        case 0:
+          tdEl.textContent = '1ST';
+          break;
+        case 1:
+          tdEl.textContent = '2ND';
+          break;
+        case 2:
+          tdEl.textContent = '3RD';
+      }
+    }
     trEl.appendChild(tdEl);
     tdEl = document.createElement('td');
-    tdEl.textContent = allScores[i].initials;
+    tdEl.textContent = allScores[i].initials.toUpperCase();
     trEl.appendChild(tdEl);
     tdEl = document.createElement('td');
     tdEl.textContent = allScores[i].score;
