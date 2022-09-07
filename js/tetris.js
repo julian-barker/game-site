@@ -20,8 +20,8 @@ let paused = false;
 let intervalId; // used to stop setInterval
 let activePiece; // used to call translate left/right with event listener
 
-window.addEventListener('keydown', function(event) {
-  if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)){
+window.addEventListener('keydown', function (event) {
+  if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
     event.preventDefault();
   }
   if (event.key === ' ') {
@@ -41,6 +41,7 @@ playButton();
 
 // starts running the game by calling nextPiece
 function startTetris() {
+  score = 0;
   paused = false;
   console.log(gameSpace);
   nextPiece();
@@ -53,7 +54,7 @@ function nextPiece() {
   console.log('new piece', activePiece);
   console.log('Dropping next piece');
   // setInterval returns the intervalId, used to cancel it later
-  intervalId = setInterval(function() {
+  intervalId = setInterval(function () {
     activePiece.translate('ArrowDown');
   }, 300);
   console.log('intervalId = ' + intervalId);
@@ -63,7 +64,7 @@ function nextPiece() {
 function newPiece() {
   console.log('Creating new piece...');
   let num = Math.floor(Math.random() * 7);
-  switch(num) {
+  switch (num) {
     case 1:
       return new J();
     case 2:
@@ -101,7 +102,7 @@ function endGame() {
 
   popup.append(h2, h3, input, btn);
   container.prepend(popup);
-  for (let y of gameSpace){
+  for (let y of gameSpace) {
     y.fill(0);
   }
   draw();
@@ -118,15 +119,15 @@ function submitScore() {
   }
   const initials = $('#initials').value;
 
-  scores.push([initials, score]);
-
+  scores.push({initials, score});
+  scores.sort((a, b) => b.score - a.score);
   localStorage['scores'] = JSON.stringify(scores);
   const popup = $('#popup');
   popup.remove();
   playButton();
 }
 
-function playButton(){
+function playButton() {
   const container = $('#canvas-container');
   const play = _('button');
   play.textContent = 'Play';
@@ -135,7 +136,7 @@ function playButton(){
   play.addEventListener('click', playHandler);
 }
 
-function playHandler(){
+function playHandler() {
   let playButton = $('#playButton');
   playButton.remove();
   startTetris();
@@ -151,7 +152,7 @@ function Piece() {
   this.coords = [];
   this.origin = [5, 3];
 
-  this.rotate = function() {
+  this.rotate = function () {
     // check for ability to rotate
     this.state = this.state === 270 ? 0 : this.state + 90;
     const nextCoords = this.createCoords();
@@ -165,7 +166,7 @@ function Piece() {
     draw();
   };
 
-  this.write = function() {
+  this.write = function () {
     console.log('writing to gameSpace...', this.coords);
     for (let coord of this.coords) {
       if (coord[1] < 4) {
@@ -191,7 +192,7 @@ function Piece() {
     return true;
   };
 
-  this.translate = function(direction) {
+  this.translate = function (direction) {
     if (paused === true) return;
     // console.log(direction);
 
@@ -201,7 +202,7 @@ function Piece() {
         // console.log(`moving down from row ${this.origin[1]} to row ${this.origin[1] + 1}`, this.origin);
         for (let coord of this.coords) {
           // console.log('y-coord = ' + coord[1]);
-          if ( coord[1] === 23 || gameSpace[coord[1] + 1][coord[0]] !== 0) {
+          if (coord[1] === 23 || gameSpace[coord[1] + 1][coord[0]] !== 0) {
             clearInterval(intervalId);
             this.write() ? nextPiece() : null;
             return;
@@ -252,9 +253,9 @@ function I() {
 
   this.val = 1;
 
-  this.createCoords = function() {
+  this.createCoords = function () {
     let coords;
-    switch(this.state) {
+    switch (this.state) {
       case 90:
         coords = [
           [this.origin[0] - 2, this.origin[1]],
@@ -298,9 +299,9 @@ function J() {
 
   this.val = 2;
 
-  this.createCoords = function() {
+  this.createCoords = function () {
     let coords;
-    switch(this.state) {
+    switch (this.state) {
       case 90:
         coords = [
           [this.origin[0] - 1, this.origin[1] - 1],
@@ -344,9 +345,9 @@ function L() {
 
   this.val = 3;
 
-  this.createCoords = function() {
+  this.createCoords = function () {
     let coords;
-    switch(this.state) {
+    switch (this.state) {
       case 90:
         coords = [
           [this.origin[0] - 1, this.origin[1]],
@@ -390,7 +391,7 @@ function O() {
 
   this.val = 4;
 
-  this.createCoords = function() {
+  this.createCoords = function () {
     let coords = [
       [this.origin[0] - 1, this.origin[1]],
       [this.origin[0] - 1, this.origin[1] - 1],
@@ -408,9 +409,9 @@ function S() {
 
   this.val = 5;
 
-  this.createCoords = function() {
+  this.createCoords = function () {
     let coords;
-    switch(this.state) {
+    switch (this.state) {
       case 90:
         coords = [
           [this.origin[0] - 1, this.origin[1] - 2],
@@ -454,9 +455,9 @@ function T() {
 
   this.val = 6;
 
-  this.createCoords = function() {
+  this.createCoords = function () {
     let coords;
-    switch(this.state) {
+    switch (this.state) {
       case 90:
         coords = [
           [this.origin[0], this.origin[1] - 2],
@@ -476,7 +477,7 @@ function T() {
       case 270:
         coords = [
           [this.origin[0], this.origin[1]],
-          [this.origin[0], this.origin[1] -1],
+          [this.origin[0], this.origin[1] - 1],
           [this.origin[0] - 1, this.origin[1] - 1],
           [this.origin[0], this.origin[1] - 2]
         ];
@@ -500,9 +501,9 @@ function Z() {
 
   this.val = 7;
 
-  this.createCoords = function() {
+  this.createCoords = function () {
     let coords;
-    switch(this.state) {
+    switch (this.state) {
       case 90:
         coords = [
           [this.origin[0] + 1, this.origin[1] - 2],
@@ -562,9 +563,9 @@ function draw() {
       let h = canvas.height / (gameSpace.length - 4);
       let w = canvas.width / (gameSpace[y].length);
       ctx.fillStyle = color;
-      ctx.fillRect(x * w, (y-4) * h, w, h);
+      ctx.fillRect(x * w, (y - 4) * h, w, h);
       ctx.strokeStyle = 'black';
-      ctx.strokeRect(x * w, (y-4) * h, w, h);
+      ctx.strokeRect(x * w, (y - 4) * h, w, h);
     }
   }
   for (let coord of activePiece.coords) {
@@ -576,11 +577,10 @@ function draw() {
     let w = canvas.width / (gameSpace[y].length);
     // console.log('x = ' + x, 'y = ' + y, 'w = ' + w, 'h = ' + h);
     ctx.fillStyle = color;
-    ctx.fillRect(x * w, (y-4) * h, w, h);
+    ctx.fillRect(x * w, (y - 4) * h, w, h);
     ctx.strokeStyle = 'black';
-    ctx.strokeRect(x * w, (y-4) * h, w, h);
+    ctx.strokeRect(x * w, (y - 4) * h, w, h);
   }
   ctx.fillStyle = 'white';
   ctx.fillText(`Score: ${score}`, 10, 10);
 }
-
