@@ -1,25 +1,19 @@
-#main-container{
-	margin-top: 80px;
-    padding: 15px 0;
-	width: 680px;
-	border: 8px solid rgb(255, 255, 255);
-	border-radius: 20px;
-	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.125);
-	background-color: white;
-	display: flex;
-	justify-content: space-evenly;
-    align-items: flex-start;
+@font-face {
+	font-family: "Quicksand";
+	src: url(/fonts/Quicksand-VariableFont_wght.ttf);
+}
+
+canvas {
+    border: 3px solid black;
+    border-radius: 10px;
+    background-color: #EEE;
 }
 
 #canvas-container {
     position: relative;
     display: flex;
     justify-content: center;
-}
-
-canvas {
-    border: 3px solid black;
-    border-radius: 10px;
+    font-family: 'Quicksand';
 }
 
 #canvas2-container {
@@ -27,6 +21,7 @@ canvas {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Quicksand';
 }
 
 #canvas2-container div {
