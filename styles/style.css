@@ -125,7 +125,7 @@ footer{
 	color: white;
 	display:flex;
 	margin-top: 50px;
-	min-height: 100vh;
+	min-height: 25vh;
 	background-color: black;
 	border-top: solid;
 	border-width: 5px;
@@ -174,7 +174,7 @@ footer{
 #canvas-container{
 	margin-top: 80px;
 	width: 400px;
-	height: 800px;
+	height: 700px;
 	border: 8px solid rgb(255, 255, 255);
 	border-radius: 20px;
 	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.125);
