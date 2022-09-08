@@ -28,35 +28,17 @@ for (let i in gameSpace2) {
 }
 
 
-// add event listeners for user inou to control the game
-// window.addEventListener('keydown', addListeners);
+// display play button on load
+playButton();
 
-// function addListeners(event) {
-//   if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-//     event.preventDefault();
-//   }
-//   if (event.key === ' ') {
-//     paused = !paused;
-//     if (paused === false){
-//       const h2 = $('#pause');
-//       h2.remove();
-//     } else {
-//       const container = $('#canvas-container');
-//       const h2 = _('h2');
-//       h2.textContent = 'PAUSED';
-//       h2.id = 'pause';
-//       container.appendChild(h2);
-//       return;
-//     }
-//   }
-//   if (event.key === 'ArrowUp') {
-//     activePiece.rotate();
-//   } else {
-//     activePiece.translate(event.key);
-//   }
-// }
 
-window.addEventListener('keydown', function (event) {
+////////////////////////////////////////////////////////
+//////////          Functions Below           //////////
+////////////////////////////////////////////////////////
+
+
+// add event listeners for user to control the game
+function addListeners(event) {
   if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
     event.preventDefault();
   }
@@ -79,14 +61,11 @@ window.addEventListener('keydown', function (event) {
   } else {
     activePiece.translate(event.key);
   }
-});
-
-// display play button on load
-playButton();
-
+}
 
 // starts running the game by calling nextPiece
 function startTetris() {
+  window.addEventListener('keydown', addListeners);
   console.log('Starting a new game...');
   paused = false;
   nextPiece();
@@ -147,6 +126,7 @@ function newPiece() {
 // brings up the score submission popup
 function endGame() {
   paused = true;
+  window.removeEventListener('keydown', addListeners);
   const container = $('#canvas-container');
 
   // create popup and inner elements
@@ -330,7 +310,6 @@ function Piece() {
     }
   };
 }
-
 
 // Individual piece constructors
 function I() {
@@ -630,6 +609,9 @@ function Z() {
   this.coords = this.createCoords();
 }
 
+
+
+// Draw game to canvas
 function draw() {
   const canvas = $('canvas');
   const ctx = canvas.getContext('2d');
