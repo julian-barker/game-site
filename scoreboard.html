@@ -6,11 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="./styles/style.css">
   <script src="./js/scoreboard.js" defer></script>
+  <script src="./js/index.js" defer></script>
 	<title>Document</title>
 </head>
 <body>
-
-	<header>
+  <div class="bg-filter"></div>
+  <header>
     <nav>
       <h1 id="title">Gitris</h1>
       <ul>
@@ -21,13 +22,14 @@
         <li><a href="https://github.com/julian-barker/game-site" target="_blank" id="repo">Repo</a></li>
       </ul>
     </nav>
+    <button id="ld">L/D</button>
   </header>
 
-	<main>
+  <main>
     <div id="lb-main-container">
-			<h2>Leader Board</h2>
+      <h2>Leader Board</h2>
       <div id="leaderboard-container">
-				<h3>High Score</h3>
+        <h3>High Score</h3>
         <table id="scoreboard">
           <thead>
             <tr>
@@ -44,7 +46,7 @@
     </div>
   </main>
 
-	<footer>
+  <footer>
     <div id="feeter">
       <div id="footHeader">
         <h2 id="footHead">Gitris<h2>
@@ -59,6 +61,5 @@
       </div>
     </div>  
   </footer>
-
 </body>
 </html>

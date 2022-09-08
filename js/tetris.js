@@ -29,6 +29,33 @@ for (let i in gameSpace2) {
 
 
 // add event listeners for user inou to control the game
+// window.addEventListener('keydown', addListeners);
+
+// function addListeners(event) {
+//   if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+//     event.preventDefault();
+//   }
+//   if (event.key === ' ') {
+//     paused = !paused;
+//     if (paused === false){
+//       const h2 = $('#pause');
+//       h2.remove();
+//     } else {
+//       const container = $('#canvas-container');
+//       const h2 = _('h2');
+//       h2.textContent = 'PAUSED';
+//       h2.id = 'pause';
+//       container.appendChild(h2);
+//       return;
+//     }
+//   }
+//   if (event.key === 'ArrowUp') {
+//     activePiece.rotate();
+//   } else {
+//     activePiece.translate(event.key);
+//   }
+// }
+
 window.addEventListener('keydown', function (event) {
   if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
     event.preventDefault();
