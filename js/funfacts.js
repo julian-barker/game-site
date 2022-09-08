@@ -6,7 +6,7 @@ let score = 0;
 //
 function proofPrompt(question) {
   let answer = prompt(question);
-  while (answer === '' || answer === null) {
+  while (answer === '') {
     alert('Please enter a valid answer.');
     answer = prompt(question);
   }
