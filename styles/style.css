@@ -320,7 +320,7 @@ footer{
 	align-items: center;
 	background-color: black;
 	border: 5px white solid;
-	font-family: Arcade;
+	font-family: "Arcade";
 	border-radius: 20px;
 	width: 1000px;
 	text-align: center;
@@ -367,7 +367,7 @@ footer{
 #ff-main-container h2{
 	color: rgb(118, 118, 240);
 	font-size: 80px;
-	font-family: Lato;
+	font-family: "Lato";
 	text-shadow: 1px 1px black;
 }
 
@@ -378,7 +378,7 @@ footer{
 	align-items: center;
 	background-color: black;
 	border: 5px white solid;
-	font-family: Arcade;
+	font-family: "Arcade";
 	border-radius: 20px;
 	width: 1000px;
 	text-align: center;
@@ -422,3 +422,23 @@ footer{
 	font-size: 14px;
 	width: 700px;
 }
+
+#ff-button{
+	border-radius: 20px;
+	border: 4px solid white ;
+	color: white;
+	background-color: black;
+	margin: 15px;
+	width: 150px;
+	height: 50px;
+	font-family: Arial;
+	font-weight: bolder;
+	font-size: 15px;
+}
+
+#ff-button:hover{
+	background-color: white;
+	color: black;
+	cursor: pointer;
+}
+
