@@ -29,11 +29,12 @@ html.dark {
 	--main-container-bg: #AAA;
 	--nav-bg: black;
 	--title-col: #CCC;
-	--bg-filter: invert(80%);
+	--bg-filter: invert(90%);
 }
 
 .bg-filter {
   position: fixed;
+	top: 0;
   width: 100vw;
   height: 100vh;
   z-index: -1;
@@ -44,14 +45,17 @@ body{
 	margin: 0;
 	background-image: url('../img/cube-pattern.jpg');
 	background-size: 5000px;
+	min-height: 900px;
 }
 
 main{
+	margin-top: 120px;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	height: 1000px;
+	min-height: 900px;
 }
 
 header {
@@ -137,8 +141,13 @@ a{
 	font-weight: bold;
 }
 
-#repo:hover{
+#about:hover{
 	color:blue;
+	font-weight: bold;
+}
+
+#repo:hover{
+	color:blueviolet;
 	font-weight: bold;
 }
 
@@ -152,20 +161,17 @@ nav:hover #title{
 	width: 60px;
 	height: 35px;
 	position: absolute;
-	top: 120px;
+	top: 0;
 	right: 15px;
 	background-color: rgb(255, 255, 158);
 	box-shadow: 2px 2px 3px 1px gray;
 	font-weight: 600;
 	color: #333;
-	
 }
 
 #ld:hover {
 	transform: scale(1.1);
 	transition: transform 100ms ease-in;
-	/* border: 3px dashed #333;
-	background-color: rgb(255, 255, 158); */
 }
 
 #main-container{

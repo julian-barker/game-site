@@ -43,7 +43,7 @@ function addListeners(event) {
     event.preventDefault();
   }
   if (event.key === ' ') {
-    paused = !paused;
+    paused = !paused; // make false if true, true if false
     if (paused === false){
       const h2 = $('#pause');
       h2.remove();
@@ -198,20 +198,20 @@ function playHandler() {
 
 // checks for filled rows and clears them
 function checkLine(piece) {
-  let yCoords = [];
+  let yCoords = []; // stores all y coordinates for each segment in a piece
   for (let coord of piece.coords) {
     if (!gameSpace[coord[1]].includes(0)) {
       yCoords.push(coord[1]);
     }
   }
-  const set = [...new Set(yCoords)];
-  set.sort((a, b) => a - b);
+  const set = [...new Set(yCoords)]; // create array with removed duplicates and assign to set
+  set.sort((a, b) => a - b); // sorts in ascending order
   console.log(set);
   set.forEach( element => {
     gameSpace.splice(element, 1);
     gameSpace.unshift(new Array(10).fill(0));
-    score += 100;
-    speed *= 0.98;
+    score += 100; // increment score
+    speed *= 0.98; // 2% faster each time a line is cleared
   });
 }
 
@@ -221,14 +221,15 @@ function checkLine(piece) {
 // Overall Piece constructor function that holds several default methods and properties
 // It is instantiated in individual piece constructors with Piece.call(this)
 function Piece() {
-  this.state = 0;
-  this.coords = [];
-  this.origin = [5, 3];
+  this.state = 0; // rotation state
+  this.coords = []; // initializes coordinates
+  this.origin = [5, 3]; // basis for coords
 
   this.rotate = function () {
     // check for ability to rotate
-    this.state = this.state === 270 ? 0 : this.state + 90;
+    this.state = this.state === 270 ? 0 : this.state + 90; // ternary operator - if state is 270, then set to 0, or else rotate by 90
     const nextCoords = this.createCoords();
+    // valid future rotation state
     for (let coord of nextCoords) {
       if (coord[0] < 0 || coord[0] > 9 || gameSpace[coord[1]][coord[0]] !== 0) {
         this.state = this.state === 0 ? 270 : this.state - 90;
@@ -243,7 +244,7 @@ function Piece() {
   this.write = function () {
     console.log('writing to gameSpace...', this.coords);
     // write activePiece to gameSpace array
-    for (let coord of this.coords) {
+    for (let coord of this.coords) { // iterate through each coordinate (segment) of a piece
       // check for endgame criteria
       if (coord[1] < 4) {
         console.log('Reached the top - game over');
@@ -251,7 +252,7 @@ function Piece() {
         endGame();
         return false;
       }
-      gameSpace[coord[1]][coord[0]] = this.val;
+      gameSpace[coord[1]][coord[0]] = this.val; // write individual piece segment to gamespce using the value of the piece that represents its color
     }
     checkLine(this);
     draw();
@@ -266,14 +267,14 @@ function Piece() {
       // move piece down one space
       case 'ArrowDown':
         for (let coord of this.coords) {
-          // check if at the bottom or if space below is occupied
+          // check if at the bottom or if space below is occupied, if so, write and generate the next piece
           if (coord[1] === 23 || gameSpace[coord[1] + 1][coord[0]] !== 0) {
             clearInterval(intervalId);
             this.write() ? nextPiece() : null;
             return;
           }
         }
-        this.origin[1] += 1;
+        this.origin[1] += 1; // move piece down one
         this.coords = this.createCoords();
         draw();
         break;
@@ -287,7 +288,7 @@ function Piece() {
             return;
           }
         }
-        this.origin[0] -= 1;
+        this.origin[0] -= 1; // move left one
         this.coords = this.createCoords();
         draw();
         break;
@@ -301,7 +302,7 @@ function Piece() {
             return;
           }
         }
-        this.origin[0] += 1;
+        this.origin[0] += 1; // move right one
         this.coords = this.createCoords();
         draw();
         break;
