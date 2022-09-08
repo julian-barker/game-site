@@ -63,7 +63,6 @@ function addListeners(event) {
   }
 }
 
-
 // starts running the game by calling nextPiece
 function startTetris() {
   window.addEventListener('keydown', addListeners);
@@ -311,7 +310,6 @@ function Piece() {
     }
   };
 }
-
 
 // Individual piece constructors
 function I() {
@@ -611,6 +609,9 @@ function Z() {
   this.coords = this.createCoords();
 }
 
+
+
+// Draw game to canvas
 function draw() {
   const canvas = $('canvas');
   const ctx = canvas.getContext('2d');
