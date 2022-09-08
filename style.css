@@ -237,7 +237,7 @@ footer{
 
 #playButton {
 	background: none;
-	background-image: url('../img/Playbutton.png');
+	background-image: url('./img/Playbutton.png');
 	background-size: cover;
 	height: 80px;
 	width: 150px;
