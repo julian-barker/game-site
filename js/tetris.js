@@ -636,7 +636,7 @@ function draw() {
         ctx.strokeRect(a, b, w, h);
       } else {
         const grad = ctx.createRadialGradient(a, b, h, a + 5, b - 5, h/2 - 5); //create gradient for block design
-        grad.addColorStop(1, 'lightgrey');
+        grad.addColorStop(1, 'white');
         grad.addColorStop(0, color); // assign block color to gradient
         ctx.fillStyle = grad;
         ctx.fillRect(a, b, w, h); // fill blocks with gradient
@@ -658,7 +658,7 @@ function draw() {
     const a = x * w;// starting x-coord
     const b = (y - 4) * h;// starting y-coord
     const grad = ctx.createRadialGradient(a, b, h, a + 5, b - 5, h/2 - 5);
-    grad.addColorStop(1, 'lightgrey');
+    grad.addColorStop(1, 'white');
     grad.addColorStop(0, color);
     ctx.fillStyle = grad;
     ctx.fillRect(a, b, w, h);
@@ -673,6 +673,7 @@ function draw() {
   ctx.fillText(`Score: ${score}`, 10, 30);
 }
 
+// draw the next piece in its canvas
 function drawNextPiece(){
   let canvas = $('#canvas2');
   let ctx2 = canvas.getContext('2d');
@@ -706,7 +707,7 @@ function drawNextPiece(){
     const a = x * w; // starting x-coord
     const b = y * h; // starting y-coord
     const grad = ctx2.createRadialGradient(a, b, h, a + 5, b - 5, h/2 - 5);
-    grad.addColorStop(1, 'lightgrey');
+    grad.addColorStop(1, 'white');
     grad.addColorStop(0, color);
     ctx2.fillStyle = grad;
     ctx2.fillRect(a, b, w, h);
