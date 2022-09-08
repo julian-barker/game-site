@@ -42,24 +42,27 @@ html.dark {
 }
 
 body{
+	position: relative;
 	margin: 0;
 	background-image: url('../img/cube-pattern.jpg');
 	background-size: 5000px;
-	min-height: 900px;
+	min-height: 100vh;
 }
 
 main{
 	margin-top: 120px;
+	padding-bottom: 30vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	min-height: 900px;
 }
 
 header {
-	position: relative;
+	position: fixed;
+	width: 100%;
+	z-index: 1;
 }
 
 nav{
@@ -167,6 +170,7 @@ nav:hover #title{
 	box-shadow: 2px 2px 3px 1px gray;
 	font-weight: 600;
 	color: #333;
+	z-index: 1;
 }
 
 #ld:hover {
@@ -175,7 +179,7 @@ nav:hover #title{
 }
 
 #main-container{
-	margin-top: 160px;
+	margin-top: 20px;
   padding: 15px 0;
 	width: 680px;
 	border: 8px solid var(--main-container-bg);
@@ -196,6 +200,8 @@ nav:hover #title{
 }
 
 footer{
+	position: absolute;
+	bottom: 0;
 	display: flex;
 	text-align: center;
 	justify-content: center;
@@ -240,7 +246,6 @@ footer{
 	min-width: 1000px;
 }
 
-
 #playButton {
 	background: none;
 	background-image: url('../img/Playbutton.png');
@@ -255,9 +260,8 @@ footer{
 	justify-content: top;
 	align-items: center;
 	flex-direction: column;
-	margin-top: 100px;
 	width: 100%;
-	height: 1000px;
+	/* height: 1000px; */
 }
 
 #lb-main-container h2{
@@ -307,7 +311,6 @@ footer{
 	justify-content: top;
 	align-items: center;
 	flex-direction: column;
-	margin-top: 100px;
 	width: 100%;
 	height: 1000px;
 }
@@ -357,10 +360,9 @@ footer{
 
 #ff-main-container{
 	display: flex;
-	justify-content: top;
+	justify-content: flex-start;
 	align-items: center;
 	flex-direction: column;
-	padding-top: 100px;
 	width: 100%;
 	height: 1000px;
 }
