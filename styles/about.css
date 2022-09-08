@@ -1,0 +1,71 @@
+html{
+  --heading: black;
+}
+
+html.dark {
+  --heading: #CCC;
+}
+
+#heading {
+  font: bold 64px 'Trebuchet MS';
+  margin-bottom: 48px;
+  color: var(--heading);
+}
+
+h2 {
+  font: bold 32px 'Trebuchet MS';
+  margin: 0 30px;
+}
+
+p {
+  font: 20px 'Trebuchet MS';
+  text-align: justify;
+}
+
+section {
+  position: relative;
+  right: 10%;
+  width: 70%;
+  background-color: rgba(228, 215, 228, 0.8);
+  border-radius: 16px;
+  margin-bottom: 64px;
+  box-shadow: 6px 6px 10px 0 gray;
+}
+
+section:nth-of-type(even) {
+  right: 0;
+  left: 10%;
+}
+
+section:nth-of-type(even) .bio-header {
+  flex-direction: row-reverse;
+}
+
+section > div {
+  margin: 48px 24px;
+}
+
+.bio-header {
+  display: flex;
+  align-items: center;
+}
+
+.bio-photo {
+  margin: 0 20px;
+  border: 2px solid #444;
+  border-radius: 6px;
+  height: 200px;
+  box-shadow: 2px 2px 4px 1px gray;
+}
+
+.button-link {
+  margin: 0;
+  border-radius: 0 0 14px 14px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100px;
+  background-color: rgb(126, 82, 168);
+}

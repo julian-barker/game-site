@@ -15,8 +15,6 @@ if (darkMode !== undefined) {
 
 function lightDark() {
   $('html').classList.toggle('dark');
-  console.log(darkMode);
-  darkMode = !darkMode;
-  console.log(darkMode);
+  darkMode = !darkMode; // toggle true/false
   localStorage['darkMode'] = JSON.stringify(darkMode);
 }
