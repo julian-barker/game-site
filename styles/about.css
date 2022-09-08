@@ -1,5 +1,17 @@
+
+@font-face {
+	font-family: "Lato";
+	src: url('../fonts/Lato-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: "Quicksand";
+	src: url('../fonts/Quicksand-VariableFont_wght.ttf');
+}
+
 html{
   --heading: black;
+  --section-bg: rgba(242, 232, 246, 0.8);
 }
 
 html.dark {
@@ -7,18 +19,19 @@ html.dark {
 }
 
 #heading {
-  font: bold 64px 'Trebuchet MS';
-  margin-bottom: 48px;
-  color: var(--heading);
+  color: rgb(118, 118, 240);
+	font-size: 80px;
+	font-family: Lato;
+	text-shadow: 1px 1px black;
 }
 
 h2 {
-  font: bold 32px 'Trebuchet MS';
+  font: bold 32px Quicksand;
   margin: 0 30px;
 }
 
 p {
-  font: 20px 'Trebuchet MS';
+  font: 20px Quicksand;
   text-align: justify;
 }
 
@@ -26,10 +39,10 @@ section {
   position: relative;
   right: 10%;
   width: 70%;
-  background-color: rgba(228, 215, 228, 0.8);
+  background-color: rgba(242, 232, 246, 0.8);
   border-radius: 16px;
   margin-bottom: 64px;
-  box-shadow: 6px 6px 10px 0 gray;
+  box-shadow: 4px 4px 6px 0 gray;
 }
 
 section:nth-of-type(even) {
@@ -67,5 +80,7 @@ section > div {
   justify-content: center;
   width: 100%;
   height: 100px;
-  background-color: rgb(126, 82, 168);
+  background-color: rgb(118, 118, 240);
+  color: white;
+  font-size: 24px;
 }
