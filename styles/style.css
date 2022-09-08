@@ -1,22 +1,22 @@
 
 @font-face {
 	font-family: "Tetris";
-	src: url('/fonts/modern-tetris.ttf') format('truetype');
+	src: url(./fonts/modern-tetris.ttf) format('truetype');
 }
 
 @font-face {
 	font-family: "Lato";
-	src: url('/fonts/Lato-Regular.ttf') format('truetype');
+	src: url(./fonts/Lato-Regular.ttf) format('truetype');
 }
 
 @font-face {
 	font-family: "Quicksand";
-	src: url(/fonts/Quicksand-VariableFont_wght.ttf);
+	src: url(./fonts/Quicksand-VariableFont_wght.ttf);
 }
 
 @font-face {
 	font-family: "Arcade";
-	src: url(/fonts/PressStart2P-Regular.ttf);
+	src: url(./fonts/PressStart2P-Regular.ttf);
 }
 
 html {
@@ -42,7 +42,7 @@ html.dark {
 
 body{
 	margin: 0;
-	background-image: url(/img/cube-pattern.jpg);
+	background-image: url(./img/cube-pattern.jpg);
 	background-size: 5000px;
 }
 
@@ -237,7 +237,7 @@ footer{
 
 #playButton {
 	background: none;
-	background-image: url(/img/Playbutton.png);
+	background-image: url(./img/Playbutton.png);
 	background-size: cover;
 	height: 80px;
 	width: 150px;
