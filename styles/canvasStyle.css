@@ -94,6 +94,7 @@ canvas {
 }
 
 #initials{
+    text-transform: uppercase;
     width: 100px;
     text-align: center;
 }
